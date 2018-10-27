@@ -22,7 +22,7 @@ func main() {
 	// Create an http API client
 	cli, err := pedal.NewHTTPClient(clientIdentifier, 5)
 	if err != nil {
-		log.Fatalf("failed to create an API client")
+		log.Fatalf("failed to create an API client: %s", err)
 	}
 
 	// Read all stations
@@ -39,7 +39,7 @@ func main() {
 		out := []byte(fmt.Sprintf("%-30s%-10s%-10s%s\n",
 			station.Title,
 			color.CyanString(strconv.Itoa(station.Availability.Locks)),
-			color.CyanString(strconv.Itoa(station.Availability.Bikes)),
+			color.GreenString(strconv.Itoa(station.Availability.Bikes)),
 			color.RedString(fmt.Sprintf("%t", station.Closed)),
 		))
 		_, err := w.Write(out)
