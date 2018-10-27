@@ -19,7 +19,7 @@ $ CLIENT_IDENTIFIER={your client id} make run
 ## As a command line tool (go toolchain required)
 
 1. Get your client identifier, you can get one by signing up here: https://developer.oslobysykkel.no/sign-up
-2. Run the client: ``
+2. Run the client: `go run cmd/pedal/main.go -client-identifier {your client id}`
 
 ## As a go library
 
