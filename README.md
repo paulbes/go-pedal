@@ -3,24 +3,52 @@ A simple client for interacting with https://developer.oslobysykkel.no/api, this
 
 # Usage
 
-## As a command line tool (no go toolchain required)
+Ensure that you have [make](https://www.gnu.org/software/make/) and [docker](https://docs.docker.com/install/) installed. You will also need a client identifier, which you can get by creating a [by sykkel account](https://developer.oslobysykkel.no/sign-up).
 
-1. Get your client identifier, you can get one by signing up here: https://developer.oslobysykkel.no/sign-up
-2. Install docker: https://docs.docker.com/install/
-3. Ensure that you have make installed: https://www.gnu.org/software/make/
-4. Build the binary: `make build`
-5. Run the client: `CLIENT_IDENTIFIER={your client id} make run`
+## Using go
+
+Ensure that you have setup your go environment correctly: https://golang.org/doc/install
+
+### Testing
 
 ```bash
-$ make build
-$ CLIENT_IDENTIFIER={your client id} make run
+# Display the help information
+make help
+
+# Run all the checks (linting, formatting, tests, ...)
+make check
 ```
 
-## As a command line tool (go toolchain required)
+### Running
 
-1. Get your client identifier, you can get one by signing up here: https://developer.oslobysykkel.no/sign-up
-2. Run the client: `go run cmd/pedal/main.go -client-identifier {your client id}`
+```bash
+# As a CLI
+go run cmd/pedal/main.go -client-identifier {your client identifier}
+
+# As an API
+go run cmd/api/main.go -client-identifier {your client identifier}
+```
+
+### Using docker
+
+```bash
+# Building and running the CLI
+CLIENT_IDENTIFIER={your client id} make cli-build cli-run
+
+# Building and running the API
+CLIENT_IDENTIFIER={your client id} make api-build api-run
+```
 
 ## As a go library
 
 `go get github.com/paulbes/go-pedal/pedal`
+
+## Testing the local API
+
+```bash
+# Get all stations
+curl "http://localhost:8080/v1/stations"
+
+# A specific station
+curl "http://localhost:8080/v1/stations/183"
+```
