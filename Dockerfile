@@ -1,8 +1,9 @@
 FROM golang:1.11.1
 
+ARG command
 WORKDIR /go/src/github.com/paulbes/go-pedal
 COPY . .
-RUN go build -ldflags "-linkmode external -extldflags -static" -a cmd/pedal/main.go
+RUN go build -ldflags "-linkmode external -extldflags -static" -a $command
 
 FROM alpine:latest
 RUN apk add --no-cache ca-certificates tzdata
