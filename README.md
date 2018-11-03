@@ -29,7 +29,7 @@ go run cmd/pedal/main.go -client-identifier {your client identifier}
 go run cmd/api/main.go -client-identifier {your client identifier}
 ```
 
-### Using docker
+## Using docker
 
 ```bash
 # Building and running the CLI
