@@ -1,0 +1,21 @@
+{
+  "stations": [
+    {
+      "id": 157,
+      "in_service": true,
+      "title": "Nylandsveien",
+      "subtitle": "mellom Norbygata og Urtegata",
+      "number_of_locks": 30,
+      "center": {
+        "latitude": 59.91562,
+        "longitude": 10.762248
+      },
+      "bounds": [
+        {
+          "latitude": 59.915418602160436,
+          "longitude": 10.762068629264832
+        }
+      ]
+    }
+  ]
+}

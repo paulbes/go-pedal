@@ -1,0 +1,8 @@
+{
+  "status": {
+    "all_stations_closed": false,
+    "stations_closed": [
+      100
+    ]
+  }
+}

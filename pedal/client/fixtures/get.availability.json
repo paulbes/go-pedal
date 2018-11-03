@@ -1,0 +1,14 @@
+{
+  "stations": [
+    {
+      "id": 177,
+      "availability": {
+        "bikes": 0,
+        "locks": 28,
+        "overflow_capacity": false
+      }
+    }
+  ],
+  "updated_at": "2018-11-03T15:17:00+00:00",
+  "refresh_rate": 10.0
+}

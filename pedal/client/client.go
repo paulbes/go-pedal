@@ -1,4 +1,4 @@
-package pedal
+package client
 
 import (
 	"encoding/json"
@@ -6,7 +6,17 @@ import (
 	"io/ioutil"
 	"net/http"
 	"time"
+
+	"github.com/paulbes/go-pedal/pedal/model"
 )
+
+// Client defines the interface that
+// an API client must implement
+type Client interface {
+	Stations() (*model.Stations, error)
+	Availability() (*model.StationAvailability, error)
+	Status() (*model.Status, error)
+}
 
 // BaseURL provides the base for performing queries
 var BaseURL = "https://oslobysykkel.no/api/v1/"
@@ -17,6 +27,8 @@ type httpClient struct {
 	client           *http.Client
 }
 
+// NewHTTPClient creates an http client that can communicate with the
+// oslo city bike API
 func NewHTTPClient(clientID string, timeoutInSec int) (Client, error) {
 	if len(clientID) == 0 {
 		return nil, fmt.Errorf("client identifier is required")
@@ -31,20 +43,22 @@ func NewHTTPClient(clientID string, timeoutInSec int) (Client, error) {
 }
 
 // Status loads the status of the stations
-func (c *httpClient) Status() (*Status, error) {
-	var status Status
+func (c *httpClient) Status() (*model.Status, error) {
+	var status = struct {
+		Status model.Status `json:"status"`
+	}{}
 
 	err := c.do("status", &status)
 	if err != nil {
 		return nil, err
 	}
 
-	return &status, err
+	return &status.Status, err
 }
 
 // Stations loads all known stations from the API
-func (c *httpClient) Stations() (*Stations, error) {
-	var stations Stations
+func (c *httpClient) Stations() (*model.Stations, error) {
+	var stations model.Stations
 
 	err := c.do("stations", &stations)
 	if err != nil {
@@ -56,8 +70,8 @@ func (c *httpClient) Stations() (*Stations, error) {
 
 // Availability fetches the availability of bikes and locks at all
 // locations.
-func (c *httpClient) Availability() (*StationAvailability, error) {
-	var stationAvailability StationAvailability
+func (c *httpClient) Availability() (*model.StationAvailability, error) {
+	var stationAvailability model.StationAvailability
 
 	err := c.do("stations/availability", &stationAvailability)
 	if err != nil {
@@ -81,7 +95,15 @@ func (c *httpClient) do(endpoint string, to interface{}) error {
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("expected success, got: %d", resp.StatusCode)
+		data, err := ioutil.ReadAll(resp.Body)
+		var reason string
+		if err != nil {
+			reason = "unknown"
+		} else {
+			reason = string(data)
+		}
+
+		return fmt.Errorf("failed to invoke API, got error code: %d, reason: %s", resp.StatusCode, reason)
 	}
 
 	data, err := ioutil.ReadAll(resp.Body)

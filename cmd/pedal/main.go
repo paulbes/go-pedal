@@ -3,12 +3,15 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/fatih/color"
-	"github.com/paulbes/go-pedal/pedal"
 	"log"
 	"os"
 	"strconv"
 	"text/tabwriter"
+
+	"github.com/paulbes/go-pedal/pedal/client"
+
+	"github.com/fatih/color"
+	"github.com/paulbes/go-pedal/pedal"
 )
 
 var clientIdentifier string
@@ -20,7 +23,7 @@ func init() {
 
 func main() {
 	// Create an http API client
-	cli, err := pedal.NewHTTPClient(clientIdentifier, 5)
+	cli, err := client.NewHTTPClient(clientIdentifier, 5)
 	if err != nil {
 		log.Fatalf("failed to create an API client: %s", err)
 	}
