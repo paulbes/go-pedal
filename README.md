@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/paulbes/go-pedal.svg?branch=master)](https://travis-ci.com/paulbes/go-pedal)
+
 # go-pedal
 A simple client for interacting with https://developer.oslobysykkel.no/api, this demo application will print some basic information about the bike stations.
 
